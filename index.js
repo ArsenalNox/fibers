@@ -3,18 +3,15 @@ var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var updateInter
 var windRLinter
+var optionMenu = document.getElementById('menu')
 
 // X, Y
 // const height = 140;
 // const width = 70;
-const height = 64;
-const width = 32;
-//Лимит длины
-const limit = 10;
+const height = 40;
+const width = 40;
 
-//
-var lastMouseX = 25;
-var lastMouseY = 25;
+//Для волн
 var curw = 0;
 var curh = 0;
 var color = 0;
@@ -22,7 +19,12 @@ var colorstate = 'asc';
 
 //Опции
 var mouseDraw = false;
+var lastMouseX = 25;
+var lastMouseY = 25;
 
+var optionKeys = ['o', 'O', 'о', 'О', 'щ', 'Щ', 'j', 'J'];
+var mouseKeys = ['m', 'M'];
+var optionVisible = false;
 
 //Создаю матрицу фибер
 var fibers = [];
@@ -74,9 +76,9 @@ function update() {
     for (let j = 0; j < fibers[0].length; j++) {
       let fx = i * 7 + 20;
       let fy = j * 7 + 100;
-      let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
+      // let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
       ctx.beginPath();
-      ctx.strokeStyle = "rgb(" + Math.floor(av * 5) + "," + Math.floor(av * 15) + "," + color + ")";
+      ctx.strokeStyle = "rgb(" + Math.floor(fx / 2) + "," + Math.floor(fy / 2) + "," + color + ")";
       ctx.moveTo(fx, fy);
       ctx.lineTo((fx) + fibers[i][j].x, (fy) + fibers[i][j].y);
       ctx.stroke();
@@ -111,9 +113,9 @@ function ChangeVector(vector, change) {
     } else {
       //Если X положительный - вычесть, если положительный - прибавить
       if (vector.x > 0) {
-        vector.x = (vector.x * 0.95)
+        vector.x = (vector.x * 0.98)
       } else {
-        vector.x = (vector.x * 0.95)
+        vector.x = (vector.x * 0.98)
       }
     }
   } else if (!(change.str == 0)) {
@@ -126,9 +128,9 @@ function ChangeVector(vector, change) {
     } else {
       //Если Y положительный - вычесть, если положительный - прибавить
       if (vector.y > 0) {
-        vector.y = (vector.y * 0.95)
+        vector.y = (vector.y * 0.98)
       } else {
-        vector.y = (vector.y * 0.95)
+        vector.y = (vector.y * 0.98)
       }
     }
   } else if (!(change.str == 0)) {
@@ -145,35 +147,35 @@ function getMousePos(canvas, evt) {
 }
 
 canvas.addEventListener('mousemove', function(evt) {
-  if(mouseDraw){
-  var mousePos = getMousePos(canvas, evt);
-  mousePos.x = Math.round(mousePos.x/14);
-  mousePos.y = Math.round(mousePos.y/14);
-  if (((mousePos.x > 0) && (mousePos.x < height - 3)) && ((mousePos.y > 0) && (mousePos.y < width - 3))) {
-    //c
-    wind[mousePos.x][mousePos.y].str = 1;
-    wind[mousePos.x][mousePos.y].y = mousePos.y - lastMouseY;
-    wind[mousePos.x][mousePos.y].x = mousePos.x - lastMouseX;
-    //r
-    wind[mousePos.x + 1][mousePos.y].str = 1;
-    wind[mousePos.x + 1][mousePos.y].y = mousePos.y - lastMouseY;
-    wind[mousePos.x + 1][mousePos.y].x = mousePos.x - lastMouseX;
-    //l
-    wind[mousePos.x - 1][mousePos.y].str = 1;
-    wind[mousePos.x - 1][mousePos.y].y = mousePos.y - lastMouseY;
-    wind[mousePos.x - 1][mousePos.y].x = mousePos.x - lastMouseX;
-    //u
-    wind[mousePos.x][mousePos.y + 1].str = 1;
-    wind[mousePos.x][mousePos.y + 1].y = mousePos.y - lastMouseY;
-    wind[mousePos.x][mousePos.y + 1].x = mousePos.x - lastMouseX;
-    //d
-    wind[mousePos.x][mousePos.y - 1].str = 1;
-    wind[mousePos.x][mousePos.y - 1].y = mousePos.y - lastMouseY;
-    wind[mousePos.x][mousePos.y - 1].x = mousePos.x - lastMouseX;
-  } else {}
-  lastMouseX = mousePos.x;
-  lastMouseY = mousePos.y;
-}
+  if (mouseDraw) {
+    var mousePos = getMousePos(canvas, evt);
+    mousePos.x = Math.round(mousePos.x / 16);
+    mousePos.y = Math.round(mousePos.y / 16);
+    if (((mousePos.x > 0) && (mousePos.x < height - 3)) && ((mousePos.y > 0) && (mousePos.y < width - 3))) {
+      //c
+      wind[mousePos.x][mousePos.y].str = 1;
+      wind[mousePos.x][mousePos.y].y = (mousePos.y + 2) - lastMouseY;
+      wind[mousePos.x][mousePos.y].x = (mousePos.x + 2) - lastMouseX;
+      //r
+      wind[mousePos.x + 1][mousePos.y].str = 2;
+      wind[mousePos.x + 1][mousePos.y].y = mousePos.y - lastMouseY;
+      wind[mousePos.x + 1][mousePos.y].x = mousePos.x - lastMouseX;
+      //l
+      wind[mousePos.x - 1][mousePos.y].str = 2;
+      wind[mousePos.x - 1][mousePos.y].y = mousePos.y - lastMouseY;
+      wind[mousePos.x - 1][mousePos.y].x = mousePos.x - lastMouseX;
+      //u
+      wind[mousePos.x][mousePos.y + 1].str = 2;
+      wind[mousePos.x][mousePos.y + 1].y = mousePos.y - lastMouseY;
+      wind[mousePos.x][mousePos.y + 1].x = mousePos.x - lastMouseX;
+      //d
+      wind[mousePos.x][mousePos.y - 1].str = 2;
+      wind[mousePos.x][mousePos.y - 1].y = mousePos.y - lastMouseY;
+      wind[mousePos.x][mousePos.y - 1].x = mousePos.x - lastMouseX;
+    } else {}
+    lastMouseX = mousePos.x;
+    lastMouseY = mousePos.y;
+  }
 }, false);
 
 function currentR() {
@@ -192,22 +194,8 @@ function currentR() {
   } else {
     curw = width - 1;
     curh = height - 1;
-    currentL()
+    setTimeout(currentL, 500)
   }
-  //Проход по каждому
-  // if(curw<height){
-  //   if(curh<width){
-  //     wind[curw][curh].x = 10;
-  //     wind[curw][curh].str = 1;
-  //     wind[curw][curh].y = 2;
-  //     curh++
-  //     setTimeout(current,10)
-  //   }else {
-  //     curh=0;
-  //     curw++;
-  //     setTimeout(current,10)
-  //   }
-  // }
 }
 
 function currentL() {
@@ -226,9 +214,38 @@ function currentL() {
   } else {
     curw = 1;
     curh = 1;
-    currentR()
+    setTimeout(currentR, 500)
+  }
+}
+
+function keyHadle(e) {
+  if (optionKeys.includes(e.key)) {
+    console.log('Option');
+    Options()
+  } else if (mouseKeys.includes(e.key)) {
+    if (mouseDraw) {
+      mouseDraw = false;
+    } else {
+      mouseDraw = true;
+    }
+  }
+}
+
+function Options() {
+  switch (optionVisible) {
+    case false:
+      optionVisible = true
+      optionMenu.style.display = 'grid';
+      break;
+    case true:
+      optionVisible = false
+      optionMenu.style.display = 'none';
+      break;
+
   }
 }
 
 updateInter = setInterval(update, 10)
 setTimeout(currentR, 10)
+
+window.addEventListener('keydown', keyHadle);

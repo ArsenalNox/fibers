@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html lang="ru" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="index.css">
-    <title></title>
-  </head>
-  <body>
-    <div class="full">
-      <canvas id="canvas"  width='1024px' height="512px" style='border: 1px solid black'></canvas>
-    </div>
-  </body>
-  <script src="index.js" charset="utf-8"></script>
+
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="index.css">
+  <title></title>
+</head>
+
+<body>
+  <section class='anno'>
+    <p> Показать опции клавиша - "<span onclick="Options()">O</span>" </p>
+  </section>
+  <section class="option-section" id='menu'>
+    <p>Опции</p>
+    <p>Информацая о поле: широта <span id='span-width'> </span>; высота <span id='span-height'> </span> </p>
+    <label for="animation-select">Текущая анимация:</label>
+    <select name="animation-select">
+      <option value="waves">Волны</option>
+    </select>
+  </section>
+  <div class="full">
+    <canvas id="canvas" width='1024px' height="512px" style='border: 1px solid black'></canvas>
+  </div>
+</body>
+<script src="index.js" charset="utf-8"></script>
+
 </html>
