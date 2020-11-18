@@ -4,10 +4,11 @@ var ctx = canvas.getContext('2d');
 var updateInter
 var windRLinter
 
-//X, Y
-const height = 140;
-const width = 69;
-
+// X, Y
+// const height = 140;
+// const width = 70;
+const height = 40;
+const width = 40;
 //Лимит длины
 const limit = 10;
 
@@ -18,6 +19,10 @@ var curw = 0;
 var curh = 0;
 var color = 0;
 var colorstate = 'asc';
+
+//Опции
+var mouseDraw = false;
+
 
 //Создаю матрицу фибер
 var fibers = [];
@@ -67,8 +72,8 @@ function update() {
   ctx.stroke();
   for (let i = 0; i < fibers.length; i++) {
     for (let j = 0; j < fibers[0].length; j++) {
-      let fx = i *7 + 20;
-      let fy = j *7 + 20;
+      let fx = i * 7 + 20;
+      let fy = j * 7 + 20;
       let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
       ctx.beginPath();
       ctx.strokeStyle = "rgb(" + Math.floor(av * 5) + "," + Math.floor(av * 15) + "," + color + ")";
@@ -139,6 +144,7 @@ function getMousePos(canvas, evt) {
 }
 
 canvas.addEventListener('mousemove', function(evt) {
+  if(mouseDraw){
   var mousePos = getMousePos(canvas, evt);
   mousePos.x = Math.round(mousePos.x/14);
   mousePos.y = Math.round(mousePos.y/14);
@@ -166,6 +172,7 @@ canvas.addEventListener('mousemove', function(evt) {
   } else {}
   lastMouseX = mousePos.x;
   lastMouseY = mousePos.y;
+}
 }, false);
 
 function currentR() {
@@ -173,7 +180,7 @@ function currentR() {
     if (curw < width) {
       wind[curh][curw].x = 10;
       wind[curh][curw].str = 1;
-      wind[curh][curw].y = 5;
+      wind[curh][curw].y = -6;
       curw++
       currentR()
     } else {
@@ -207,7 +214,7 @@ function currentL() {
     if (curw > -1) {
       wind[curh][curw].x = -10;
       wind[curh][curw].str = 1;
-      wind[curh][curw].y = 5;
+      wind[curh][curw].y = -6;
       curw--;
       currentL()
     } else {
