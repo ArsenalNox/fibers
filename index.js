@@ -173,13 +173,13 @@ function currentR() {
     if (curw < width) {
       wind[curh][curw].x = 10;
       wind[curh][curw].str = 1;
-      wind[curh][curw].y = 0;
+      wind[curh][curw].y = 5;
       curw++
       currentR()
     } else {
       curw = 0;
       curh++;
-      setTimeout(currentR, 25)
+      setTimeout(currentR, 10)
     }
   } else {
     curw = width - 1;
@@ -207,13 +207,13 @@ function currentL() {
     if (curw > -1) {
       wind[curh][curw].x = -10;
       wind[curh][curw].str = 1;
-      wind[curh][curw].y = 0;
+      wind[curh][curw].y = 5;
       curw--;
       currentL()
     } else {
       curw = width - 1;
       curh--;
-      setTimeout(currentL, 25)
+      setTimeout(currentL, 10)
     }
   } else {
     curw = 1;
