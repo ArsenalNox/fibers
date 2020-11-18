@@ -7,8 +7,8 @@ var windRLinter
 // X, Y
 // const height = 140;
 // const width = 70;
-const height = 30;
-const width = 30;
+const height = 64;
+const width = 32;
 //Лимит длины
 const limit = 10;
 
@@ -111,9 +111,9 @@ function ChangeVector(vector, change) {
     } else {
       //Если X положительный - вычесть, если положительный - прибавить
       if (vector.x > 0) {
-        vector.x = Math.ceil(vector.x * 0.95)
+        vector.x = (vector.x * 0.95)
       } else {
-        vector.x = Math.ceil(vector.x * 0.95)
+        vector.x = (vector.x * 0.95)
       }
     }
   } else if (!(change.str == 0)) {
@@ -126,9 +126,9 @@ function ChangeVector(vector, change) {
     } else {
       //Если Y положительный - вычесть, если положительный - прибавить
       if (vector.y > 0) {
-        vector.y = Math.ceil(vector.y * 0.95)
+        vector.y = (vector.y * 0.95)
       } else {
-        vector.y = Math.ceil(vector.y * 0.95)
+        vector.y = (vector.y * 0.95)
       }
     }
   } else if (!(change.str == 0)) {
@@ -179,7 +179,7 @@ canvas.addEventListener('mousemove', function(evt) {
 function currentR() {
   if (curh < height) {
     if (curw < width) {
-      wind[curh][curw].x = 4;
+      wind[curh][curw].x = -6;
       wind[curh][curw].str = 2;
       wind[curh][curw].y = -6;
       curw++
@@ -213,9 +213,9 @@ function currentR() {
 function currentL() {
   if (curh > -1) {
     if (curw > -1) {
-      wind[curh][curw].x = 4;
-      wind[curh][curw].str = 1;
-      wind[curh][curw].y = -6;
+      wind[curh][curw].x = 6;
+      wind[curh][curw].str = 2;
+      wind[curh][curw].y = 6;
       curw--;
       currentL()
     } else {
