@@ -7,8 +7,8 @@ var windRLinter
 // X, Y
 // const height = 140;
 // const width = 70;
-const height = 40;
-const width = 40;
+const height = 30;
+const width = 30;
 //Лимит длины
 const limit = 10;
 
@@ -73,7 +73,7 @@ function update() {
   for (let i = 0; i < fibers.length; i++) {
     for (let j = 0; j < fibers[0].length; j++) {
       let fx = i * 7 + 20;
-      let fy = j * 7 + 20;
+      let fy = j * 7 + 100;
       let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
       ctx.beginPath();
       ctx.strokeStyle = "rgb(" + Math.floor(av * 5) + "," + Math.floor(av * 15) + "," + color + ")";
@@ -83,6 +83,7 @@ function update() {
       // console.log(fx, fy + '\n' + fibers[i][j].x, (fy)+fibers[i][j].y);
     }
   }
+
   switch (colorstate) {
     case 'asc':
       if (color > 255) {
@@ -110,9 +111,9 @@ function ChangeVector(vector, change) {
     } else {
       //Если X положительный - вычесть, если положительный - прибавить
       if (vector.x > 0) {
-        vector.x = vector.x * 0.95
+        vector.x = Math.ceil(vector.x * 0.95)
       } else {
-        vector.x = vector.x * 0.95
+        vector.x = Math.ceil(vector.x * 0.95)
       }
     }
   } else if (!(change.str == 0)) {
@@ -125,9 +126,9 @@ function ChangeVector(vector, change) {
     } else {
       //Если Y положительный - вычесть, если положительный - прибавить
       if (vector.y > 0) {
-        vector.y = vector.y * 0.95
+        vector.y = Math.ceil(vector.y * 0.95)
       } else {
-        vector.y = vector.y * 0.95
+        vector.y = Math.ceil(vector.y * 0.95)
       }
     }
   } else if (!(change.str == 0)) {
@@ -178,15 +179,15 @@ canvas.addEventListener('mousemove', function(evt) {
 function currentR() {
   if (curh < height) {
     if (curw < width) {
-      wind[curh][curw].x = 10;
-      wind[curh][curw].str = 1;
+      wind[curh][curw].x = 4;
+      wind[curh][curw].str = 2;
       wind[curh][curw].y = -6;
       curw++
       currentR()
     } else {
       curw = 0;
       curh++;
-      setTimeout(currentR, 10)
+      setTimeout(currentR, 24)
     }
   } else {
     curw = width - 1;
@@ -212,7 +213,7 @@ function currentR() {
 function currentL() {
   if (curh > -1) {
     if (curw > -1) {
-      wind[curh][curw].x = -10;
+      wind[curh][curw].x = 4;
       wind[curh][curw].str = 1;
       wind[curh][curw].y = -6;
       curw--;
@@ -220,7 +221,7 @@ function currentL() {
     } else {
       curw = width - 1;
       curh--;
-      setTimeout(currentL, 10)
+      setTimeout(currentL, 24)
     }
   } else {
     curw = 1;
