@@ -1,19 +1,23 @@
 //Основные переменные
-
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var updateInter
 var windRLinter
+
 //X, Y
 const height = 128;
 const width = 64;
+
 //Лимит длины
 const limit = 10;
+
 //
 var lastMouseX = 25;
 var lastMouseY = 25;
 var curw = 0;
 var curh = 0;
+var color = 0;
+var colorstate = 'asc';
 
 //Создаю матрицу фибер
 var fibers = [];
@@ -67,12 +71,28 @@ function update() {
       let fy = j * 7 + 10;
       let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
       ctx.beginPath();
-      ctx.strokeStyle = "rgb(" + Math.floor(av * 15) + "," + Math.floor(av * 5) + ",0)";
+      ctx.strokeStyle = "rgb(" + Math.floor(av * 5) + "," + Math.floor(av * 15) + "," + color + ")";
       ctx.moveTo(fx, fy);
       ctx.lineTo((fx) + fibers[i][j].x, (fy) + fibers[i][j].y);
       ctx.stroke();
       // console.log(fx, fy + '\n' + fibers[i][j].x, (fy)+fibers[i][j].y);
     }
+  }
+  switch (colorstate) {
+    case 'asc':
+      if (color > 255) {
+        colorstate = 'desc'
+      } else {
+        color++
+      }
+      break;
+    case 'desc':
+      if (color < 1) {
+        colorstate = 'asc'
+      } else {
+        color--
+      }
+      break;
   }
 }
 
@@ -85,9 +105,9 @@ function ChangeVector(vector, change) {
     } else {
       //Если X положительный - вычесть, если положительный - прибавить
       if (vector.x > 0) {
-        vector.x = vector.x * 0.984
+        vector.x = vector.x * 0.944
       } else {
-        vector.x = vector.x * 0.984
+        vector.x = vector.x * 0.944
       }
     }
   } else if (!(change.str == 0)) {
@@ -100,9 +120,9 @@ function ChangeVector(vector, change) {
     } else {
       //Если Y положительный - вычесть, если положительный - прибавить
       if (vector.y > 0) {
-        vector.y = vector.y * 0.984
+        vector.y = vector.y * 0.944
       } else {
-        vector.y = vector.y * 0.984
+        vector.y = vector.y * 0.944
       }
     }
   } else if (!(change.str == 0)) {
@@ -153,7 +173,7 @@ function currentR() {
     if (curw < width) {
       wind[curh][curw].x = 10;
       wind[curh][curw].str = 1;
-      wind[curh][curw].y = 0;
+      wind[curh][curw].y = 10;
       curw++
       currentR()
     } else {
@@ -162,8 +182,8 @@ function currentR() {
       setTimeout(currentR, 1)
     }
   } else {
-    curw = width-1;
-    curh = height-1;
+    curw = width - 1;
+    curh = height - 1;
     currentL()
   }
   //Проход по каждому
@@ -183,17 +203,17 @@ function currentR() {
 }
 
 function currentL() {
-  if (curh>-1) {
-    if(curw>-1){
+  if (curh > -1) {
+    if (curw > -1) {
       wind[curh][curw].x = -10;
       wind[curh][curw].str = 1;
-      wind[curh][curw].y = 0;
+      wind[curh][curw].y = 10;
       curw--;
       currentL()
     } else {
-      curw = width-1;
+      curw = width - 1;
       curh--;
-      setTimeout(currentL,1)
+      setTimeout(currentL, 1)
     }
   } else {
     curw = 1;
