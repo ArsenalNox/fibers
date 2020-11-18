@@ -12,6 +12,8 @@ const limit = 10;
 //
 var lastMouseX = 25;
 var lastMouseY = 25;
+var curw = 0;
+var curh = 0;
 
 //Создаю матрицу фибер
 var fibers = [];
@@ -61,11 +63,11 @@ function update() {
   ctx.stroke();
   for (let i = 0; i < fibers.length; i++) {
     for (let j = 0; j < fibers[0].length; j++) {
-      let fx = i * 5 + 10;
-      let fy = j * 5 + 10;
+      let fx = i * 7 + 10;
+      let fy = j * 7 + 10;
       let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
       ctx.beginPath();
-      ctx.strokeStyle = "rgb(" + Math.floor(255 - i * 2) + "," + Math.floor(255 - j * 2) + ", 255)";
+      ctx.strokeStyle = "rgb(" + Math.floor(av * 15) + "," + Math.floor(av * 5) + ",0)";
       ctx.moveTo(fx, fy);
       ctx.lineTo((fx) + fibers[i][j].x, (fy) + fibers[i][j].y);
       ctx.stroke();
@@ -146,20 +148,59 @@ canvas.addEventListener('mousemove', function(evt) {
   lastMouseY = mousePos.y;
 }, false);
 
-function current() {
-  console.log('ss');
-  for (var i = 1; i < height - 10; i++) {
-    generateWind(i)
+function currentR() {
+  if (curh < height) {
+    if (curw < width) {
+      wind[curh][curw].x = 10;
+      wind[curh][curw].str = 1;
+      wind[curh][curw].y = 0;
+      curw++
+      currentR()
+    } else {
+      curw = 0;
+      curh++;
+      setTimeout(currentR, 1)
+    }
+  } else {
+    curw = width-1;
+    curh = height-1;
+    currentL()
   }
+  //Проход по каждому
+  // if(curw<height){
+  //   if(curh<width){
+  //     wind[curw][curh].x = 10;
+  //     wind[curw][curh].str = 1;
+  //     wind[curw][curh].y = 2;
+  //     curh++
+  //     setTimeout(current,10)
+  //   }else {
+  //     curh=0;
+  //     curw++;
+  //     setTimeout(current,10)
+  //   }
+  // }
 }
 
-function generateWind(x) {
-  for (var i = 1; i < width - 10; i++) {
-    wind[x][i].x = 1
-    wind[x][i].y = 0
-    wind[x][i].str = 1
+function currentL() {
+  if (curh>-1) {
+    if(curw>-1){
+      wind[curh][curw].x = -10;
+      wind[curh][curw].str = 1;
+      wind[curh][curw].y = 0;
+      curw--;
+      currentL()
+    } else {
+      curw = width-1;
+      curh--;
+      setTimeout(currentL,1)
+    }
+  } else {
+    curw = 1;
+    curh = 1;
+    currentR()
   }
 }
 
 updateInter = setInterval(update, 10)
-setTimeout(current, 10)
+setTimeout(currentR, 10)
