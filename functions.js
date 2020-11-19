@@ -61,13 +61,13 @@ function ChangeVector(vector, change) {
     } else {
       //Если X положительный - вычесть, если положительный - прибавить
       if (vector.x > 0) {
-        vector.x = (vector.x * 0.98)
+        vector.x = +(vector.x * 0.98).toFixed(2)
       } else {
-        vector.x = (vector.x * 0.98)
+        vector.x = +(vector.x * 0.98).toFixed(2)
       }
     }
   } else if (!(change.str == 0)) {
-    vector.x += change.x * change.str
+    vector.x += +(change.x * change.str).toFixed(2)
   }
   if ((change.y == 0) || (change.str == 0)) {
     //Если Y находится в пределах округления
@@ -76,13 +76,13 @@ function ChangeVector(vector, change) {
     } else {
       //Если Y положительный - вычесть, если положительный - прибавить
       if (vector.y > 0) {
-        vector.y = (vector.y * 0.98)
+        vector.y = +(vector.y * 0.98).toFixed(2)
       } else {
-        vector.y = (vector.y * 0.98)
+        vector.y = +(vector.y * 0.98).toFixed(2)
       }
     }
   } else if (!(change.str == 0)) {
-    vector.y += change.y * change.str
+    vector.y += +(change.y * change.str).toFixed(2)
   }
 }
 
@@ -219,8 +219,8 @@ function initiateAnimation() {
 
 function cricularWave() {
   if (waveCurrent < waveCount) {
-    for (var i = iterWinds * 4; i < iterWinds * 2 + 10; i++) {
-      for (var j = iterWinds * 4; j < iterWinds * 4 + 10; j++) {
+    for (var i = iterWinds*5; i < iterWinds*5+10; i++) {
+      for (var j =  iterWinds*5; j < iterWinds*5+ 10; j++) {
         wind[i][j].x = -(center.x - i);
         wind[i][j].y = -(center.y - j);
         wind[i][j].str = 1;
