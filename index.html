@@ -13,16 +13,21 @@
   </section>
   <section class="option-section" id='menu'>
     <p>Опции</p>
+    <br> <hr> <br>
     <p>Информацая о поле: широта <span id='span-width'> </span>; высота <span id='span-height'> </span> </p>
     <label for="animation-select">Текущая анимация:</label>
     <select name="animation-select">
       <option value="waves">Волны</option>
+      <option value="circularWaves">Круг(!)</option>
+      <option value="randomWind">Случайный ветер(!)</option>
     </select>
   </section>
   <div class="full">
     <canvas id="canvas" width='1024px' height="512px" style='border: 1px solid black'></canvas>
   </div>
 </body>
+<script src="jquery-3.5.1.js" charset="utf-8"></script>
+<script src="functions.js" charset="utf-8"></script>
 <script src="index.js" charset="utf-8"></script>
 
 </html>
