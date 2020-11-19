@@ -101,23 +101,23 @@ canvas.addEventListener('mousemove', function(evt) {
     mousePos.y = Math.round(mousePos.y / 16);
     if (((mousePos.x > 0) && (mousePos.x < height - 3)) && ((mousePos.y > 0) && (mousePos.y < width - 3))) {
       //c
-      wind[mousePos.x][mousePos.y].str = 1;
+      wind[mousePos.x][mousePos.y].str = 3;
       wind[mousePos.x][mousePos.y].y = (mousePos.y + 2) - lastMouseY;
       wind[mousePos.x][mousePos.y].x = (mousePos.x + 2) - lastMouseX;
       //r
-      wind[mousePos.x + 1][mousePos.y].str = 2;
+      wind[mousePos.x + 1][mousePos.y].str = 3;
       wind[mousePos.x + 1][mousePos.y].y = mousePos.y - lastMouseY;
       wind[mousePos.x + 1][mousePos.y].x = mousePos.x - lastMouseX;
       //l
-      wind[mousePos.x - 1][mousePos.y].str = 2;
+      wind[mousePos.x - 1][mousePos.y].str = 3;
       wind[mousePos.x - 1][mousePos.y].y = mousePos.y - lastMouseY;
       wind[mousePos.x - 1][mousePos.y].x = mousePos.x - lastMouseX;
       //u
-      wind[mousePos.x][mousePos.y + 1].str = 2;
+      wind[mousePos.x][mousePos.y + 1].str = 3;
       wind[mousePos.x][mousePos.y + 1].y = mousePos.y - lastMouseY;
       wind[mousePos.x][mousePos.y + 1].x = mousePos.x - lastMouseX;
       //d
-      wind[mousePos.x][mousePos.y - 1].str = 2;
+      wind[mousePos.x][mousePos.y - 1].str = 3;
       wind[mousePos.x][mousePos.y - 1].y = mousePos.y - lastMouseY;
       wind[mousePos.x][mousePos.y - 1].x = mousePos.x - lastMouseX;
     } else {}
@@ -219,8 +219,8 @@ function initiateAnimation() {
 
 function cricularWave() {
   if (waveCurrent < waveCount) {
-    for (var i = iterWinds*5; i < iterWinds*5+10; i++) {
-      for (var j =  iterWinds*5; j < iterWinds*5+ 10; j++) {
+    for (var i = iterWinds * 5; i < iterWinds * 5 + 10; i++) {
+      for (var j = iterWinds * 5; j < iterWinds * 5 + 10; j++) {
         wind[i][j].x = -(center.x - i);
         wind[i][j].y = -(center.y - j);
         wind[i][j].str = 1;

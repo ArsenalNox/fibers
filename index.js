@@ -8,9 +8,9 @@ var windRLinter
 // X, Y
 // const height = 140;
 // const width = 70;
-const height = 128;
+const height = 62;
 const width = 32;
-
+const limit = 20;
 //Для волн
 var curw = 0;
 var curh = 0;
@@ -67,6 +67,6 @@ document.getElementById('span-width').innerText = width;
 document.getElementById('span-height').innerText = height;
 
 
-updateInter = setInterval(update, 30)
+updateInter = setInterval(update, 5)
 initiateAnimation()
 window.addEventListener('keydown', keyHadle);
