@@ -22,11 +22,11 @@ function update() {
   ctx.stroke();
   for (let i = 0; i < fibers.length; i++) {
     for (let j = 0; j < fibers[0].length; j++) {
-      let fx = i * 11 + 20;
-      let fy = j * 11 + 100;
-      // let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
+      let fx = i * 4 + offsetX;
+      let fy = j * 4 + offsetY;
+      let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
       ctx.beginPath();
-      ctx.strokeStyle = "rgb(" + Math.floor( fx% (i / j)) + "," + Math.floor( fy % (i*j) ) + "," + color + ")";
+      ctx.strokeStyle = "rgb(" + Math.floor(255 - color) + "," + Math.floor(av * 4) + "," + color + ")";
       ctx.moveTo(fx, fy);
       ctx.lineTo((fx) + fibers[i][j].x, (fy) + fibers[i][j].y);
       ctx.stroke();
@@ -61,13 +61,13 @@ function ChangeVector(vector, change) {
     } else {
       //Если X положительный - вычесть, если положительный - прибавить
       if (vector.x > 0) {
-        vector.x = +(vector.x * 0.98).toFixed(2)
+        vector.x = +(vector.x * decayRate).toFixed(3)
       } else {
-        vector.x = +(vector.x * 0.98).toFixed(2)
+        vector.x = +(vector.x * decayRate).toFixed(3)
       }
     }
   } else if (!(change.str == 0)) {
-    vector.x += +(change.x * change.str).toFixed(2)
+    vector.x += +(change.x * change.str).toFixed(3)
   }
   if ((change.y == 0) || (change.str == 0)) {
     //Если Y находится в пределах округления
@@ -76,13 +76,13 @@ function ChangeVector(vector, change) {
     } else {
       //Если Y положительный - вычесть, если положительный - прибавить
       if (vector.y > 0) {
-        vector.y = +(vector.y * 0.98).toFixed(2)
+        vector.y = +(vector.y * decayRate).toFixed(3)
       } else {
-        vector.y = +(vector.y * 0.98).toFixed(2)
+        vector.y = +(vector.y * decayRate).toFixed(3)
       }
     }
   } else if (!(change.str == 0)) {
-    vector.y += +(change.y * change.str).toFixed(2)
+    vector.y += +(change.y * change.str).toFixed(3)
   }
 }
 
@@ -101,25 +101,25 @@ canvas.addEventListener('mousemove', function(evt) {
     mousePos.y = Math.round(mousePos.y / 16);
     if (((mousePos.x > 0) && (mousePos.x < height - 3)) && ((mousePos.y > 0) && (mousePos.y < width - 3))) {
       //c
-      wind[mousePos.x][mousePos.y].str = 3;
-      wind[mousePos.x][mousePos.y].y = (mousePos.y + 2) - lastMouseY;
-      wind[mousePos.x][mousePos.y].x = (mousePos.x + 2) - lastMouseX;
+      wind[mousePos.x][mousePos.y].str = 1;
+      wind[mousePos.x][mousePos.y].y = -(center.y - mousePos.y);
+      wind[mousePos.x][mousePos.y].x = -(center.x - mousePos.x);
       //r
-      wind[mousePos.x + 1][mousePos.y].str = 3;
-      wind[mousePos.x + 1][mousePos.y].y = mousePos.y - lastMouseY;
-      wind[mousePos.x + 1][mousePos.y].x = mousePos.x - lastMouseX;
+      wind[mousePos.x + 1][mousePos.y].str = 1;
+      wind[mousePos.x + 1][mousePos.y].y = -(center.y - mousePos.y);
+      wind[mousePos.x + 1][mousePos.y].x = -(center.x - mousePos.x);
       //l
-      wind[mousePos.x - 1][mousePos.y].str = 3;
-      wind[mousePos.x - 1][mousePos.y].y = mousePos.y - lastMouseY;
-      wind[mousePos.x - 1][mousePos.y].x = mousePos.x - lastMouseX;
+      wind[mousePos.x - 1][mousePos.y].str = 1;
+      wind[mousePos.x - 1][mousePos.y].y = -(center.y - mousePos.y);
+      wind[mousePos.x - 1][mousePos.y].x = -(center.x - mousePos.x);
       //u
-      wind[mousePos.x][mousePos.y + 1].str = 3;
-      wind[mousePos.x][mousePos.y + 1].y = mousePos.y - lastMouseY;
-      wind[mousePos.x][mousePos.y + 1].x = mousePos.x - lastMouseX;
+      wind[mousePos.x][mousePos.y + 1].str = 1;
+      wind[mousePos.x][mousePos.y + 1].y = -(center.y - mousePos.y);
+      wind[mousePos.x][mousePos.y + 1].x = -(center.x - mousePos.x);
       //d
-      wind[mousePos.x][mousePos.y - 1].str = 3;
-      wind[mousePos.x][mousePos.y - 1].y = mousePos.y - lastMouseY;
-      wind[mousePos.x][mousePos.y - 1].x = mousePos.x - lastMouseX;
+      wind[mousePos.x][mousePos.y - 1].str = 1;
+      wind[mousePos.x][mousePos.y - 1].y = -(center.y - mousePos.y);
+      wind[mousePos.x][mousePos.y - 1].x = -(center.x - mousePos.x);
     } else {}
     lastMouseX = mousePos.x;
     lastMouseY = mousePos.y;
@@ -130,9 +130,11 @@ function currentR() {
   isAnimating = true
   if (curh < height) {
     if (curw < width) {
-      wind[curh][curw].x = -2;
+      // wind[curh][curw].x = -2;
+      // wind[curh][curw].y = -6;
+      wind[curh][curw].x = -(center.x - curh)/10;
+      wind[curh][curw].y = -(center.y - curw)/10;
       wind[curh][curw].str = 2;
-      wind[curh][curw].y = -6;
       curw++
       currentR()
     } else {
@@ -155,9 +157,11 @@ function currentL() {
   isAnimating = true
   if (curh > -1) {
     if (curw > -1) {
-      wind[curh][curw].x = 2;
+      // wind[curh][curw].x = 2;
+      // wind[curh][curw].y = 6;
+      wind[curh][curw].x= -(center.x - curh)/10;
+      wind[curh][curw].y= -(center.y - curw)/10;
       wind[curh][curw].str = 2;
-      wind[curh][curw].y = 6;
       curw--;
       currentL()
     } else {
@@ -187,6 +191,7 @@ function keyHadle(e) {
       mouseDraw = true;
     }
   }
+  updateMenu()
 }
 
 function Options() {
@@ -206,21 +211,30 @@ function Options() {
 function initiateAnimation() {
   switch (animations[currentAnimation]) {
     case 'wavesRL':
-      currentR()
+      if (!isAnimating) {
+        isAnimating = true
+        currentR()
+      }
       break;
     case 'circularWaves':
-      setInterval(cricularWave, 600)
+      if (!isAnimating) {
+        isAnimating = true
+        setInterval(drawCircle, 10)
+      }
       break;
-    case 'randomWind':
-
+    case 'blocksToSide':
+      if (!isAnimating) {
+        isAnimating = true
+        setTimeout(cricularWave, 1000)
+      }
       break;
   }
 }
 
 function cricularWave() {
   if (waveCurrent < waveCount) {
-    for (var i = iterWinds * 5; i < iterWinds * 5 + 10; i++) {
-      for (var j = iterWinds * 5; j < iterWinds * 5 + 10; j++) {
+    for (var i = iterWinds * 5; i < iterWinds * 5 + 5; i++) {
+      for (var j = 0; j < 30; j++) {
         wind[i][j].x = -(center.x - i);
         wind[i][j].y = -(center.y - j);
         wind[i][j].str = 1;
@@ -228,10 +242,39 @@ function cricularWave() {
     }
     waveCurrent++
     iterWinds++
-    setTimeout(cricularWave, 1000);
+    setTimeout(cricularWave, 50);
   } else {
-    console.log('Wave completed');
-  }
+    waveCurrent = 0;
+    iterWinds = 0;
 
+    setTimeout(cricularWave, 100);
+  }
+}
+
+function changeDecay() {
+  decayRate = decayInput.value
+  console.log('Changing decay rate to ' + decayInput.value);
+}
+
+function drawCircle() {
+  console.log('Drawing');
+  if (iterationsCirlce < 40) {
+    for (var i = 0; i < height; i++) {
+      for (var j = 0; j < width; j++) {
+        if (Math.abs(Math.pow((i - center.x), 2) + Math.pow((j - center.y), 2) - Math.pow(r, 2)) < Math.pow(epsilon, 2)) {
+          wind[i][j].x = -(center.x - i) / 5;
+          wind[i][j].y = -(center.y - j) / 5;
+          wind[i][j].str = 1;
+        }
+      }
+    }
+    iterationsCirlce++
+    r++
+    epsilon += 0.2
+  } else {
+    r = 5;
+    epsilon = 3;
+    iterationsCirlce = 0;
+  }
 
 }

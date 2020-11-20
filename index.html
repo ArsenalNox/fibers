@@ -13,9 +13,12 @@
   </section>
   <section class="option-section" id='menu'>
     <p>Опции</p>
-    <br> <hr> <br>
+    <br>
+    <hr> <br>
     <p>Информацая о поле: широта <span id='span-width'> </span>; высота <span id='span-height'> </span> </p>
-    <label for="animation-select">Текущая анимация:</label>
+    <p>Коэффицент убывания: <input type='range' max='1' min='0.9' step='0.001' id='decay-input' onchange="changeDecay()"></input> </p>
+    <p>Рисование мышью <span id='mouse-control'></span> </p>
+    <label for="animation-select" style='color:white'>Текущая анимация:</label>
     <select name="animation-select">
       <option value="waves">Волны</option>
       <option value="circularWaves">Круг(!)</option>

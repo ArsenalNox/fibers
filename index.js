@@ -1,6 +1,7 @@
 //Основные переменные
 var canvas = document.getElementById('canvas');
-var optionMenu = document.getElementById('menu')
+var optionMenu = document.getElementById('menu');
+var decayInput = document.getElementById('decay-input')
 var ctx = canvas.getContext('2d');
 var updateInter
 var windRLinter
@@ -8,35 +9,46 @@ var windRLinter
 // X, Y
 // const height = 140;
 // const width = 70;
-const height = 62;
+const height = 128;
 const width = 32;
 const limit = 20;
+var offsetX = 91;
+var offsetY = 91;
 //Для волн
 var curw = 0;
 var curh = 0;
 var color = 0;
 var colorstate = 'asc';
 var center = {
-  x: Math.round(height/2),
-  y: Math.round(width/2)
+  x: Math.round(height / 2),
+  y: Math.round(width / 2)
 }
+
 //Итераторы для волны от центра
-var waveCount = 5;
+var waveCount = 25;
 var waveCurrent = 0;
 var iterWinds = 0;
 
 //Опции
+//Мышь
 var mouseDraw = false;
 var lastMouseX = 25;
 var lastMouseY = 25;
+//Анимации
 var stopWind = false;
 var isAnimating = false;
-
+var decayRate = 0.95;
+//Горячие клавиши
 var optionKeys = ['o', 'O', 'о', 'О', 'щ', 'Щ', 'j', 'J'];
-var animations = ['wavesRL', 'circularWaves', 'randomWind'];
-var currentAnimation = 0;
+var animations = ['wavesRL', 'circularWaves', 'blocksToSide'];
 var mouseKeys = ['m', 'M'];
 var optionVisible = false;
+var currentAnimation = 1;
+
+//Для круговых волн
+var epsilon = 4;
+var r = 5;
+var iterationsCirlce = 0;
 
 //Создание матрицы фибер
 var fibers = [];
@@ -62,11 +74,13 @@ for (let i = 0; i < height; i++) {
   }
 }
 
-
+function updateMenu(){
 document.getElementById('span-width').innerText = width;
 document.getElementById('span-height').innerText = height;
-
-
+document.getElementById('decay-input').value = decayRate;
+document.getElementById('mouse-control').innerText = mouseDraw
+}
+updateMenu()
 updateInter = setInterval(update, 10)
 initiateAnimation()
 window.addEventListener('keydown', keyHadle);
