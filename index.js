@@ -9,11 +9,11 @@ var windRLinter
 // X, Y
 // const height = 140;
 // const width = 70;
-const height = 128;
-const width = 32;
+const height = 64;
+const width = 64;
 const limit = 20;
-var offsetX = 91;
-var offsetY = 91;
+var offsetX = 30;
+var offsetY = 30;
 //Для волн
 var curw = 0;
 var curh = 0;
@@ -47,7 +47,7 @@ var currentAnimation = 1;
 
 //Для круговых волн
 var epsilon = 4;
-var r = 5;
+var r = 2;
 var iterationsCirlce = 0;
 
 //Создание матрицы фибер

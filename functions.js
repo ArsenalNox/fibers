@@ -97,29 +97,11 @@ function getMousePos(canvas, evt) {
 canvas.addEventListener('mousemove', function(evt) {
   if (mouseDraw) {
     var mousePos = getMousePos(canvas, evt);
-    mousePos.x = Math.round(mousePos.x / 16);
-    mousePos.y = Math.round(mousePos.y / 16);
+    mousePos.x = Math.round((mousePos.x + offsetX) / 10);
+    mousePos.y = Math.round((mousePos.y + offsetY) / 10);
     if (((mousePos.x > 0) && (mousePos.x < height - 3)) && ((mousePos.y > 0) && (mousePos.y < width - 3))) {
-      //c
-      wind[mousePos.x][mousePos.y].str = 1;
-      wind[mousePos.x][mousePos.y].y = -(center.y - mousePos.y);
-      wind[mousePos.x][mousePos.y].x = -(center.x - mousePos.x);
-      //r
-      wind[mousePos.x + 1][mousePos.y].str = 1;
-      wind[mousePos.x + 1][mousePos.y].y = -(center.y - mousePos.y);
-      wind[mousePos.x + 1][mousePos.y].x = -(center.x - mousePos.x);
-      //l
-      wind[mousePos.x - 1][mousePos.y].str = 1;
-      wind[mousePos.x - 1][mousePos.y].y = -(center.y - mousePos.y);
-      wind[mousePos.x - 1][mousePos.y].x = -(center.x - mousePos.x);
-      //u
-      wind[mousePos.x][mousePos.y + 1].str = 1;
-      wind[mousePos.x][mousePos.y + 1].y = -(center.y - mousePos.y);
-      wind[mousePos.x][mousePos.y + 1].x = -(center.x - mousePos.x);
-      //d
-      wind[mousePos.x][mousePos.y - 1].str = 1;
-      wind[mousePos.x][mousePos.y - 1].y = -(center.y - mousePos.y);
-      wind[mousePos.x][mousePos.y - 1].x = -(center.x - mousePos.x);
+      center.x = mousePos.x;
+      center.y = mousePos.y;
     } else {}
     lastMouseX = mousePos.x;
     lastMouseY = mousePos.y;
@@ -132,8 +114,8 @@ function currentR() {
     if (curw < width) {
       // wind[curh][curw].x = -2;
       // wind[curh][curw].y = -6;
-      wind[curh][curw].x = -(center.x - curh)/10;
-      wind[curh][curw].y = -(center.y - curw)/10;
+      wind[curh][curw].x = -(center.x - curh) / 10;
+      wind[curh][curw].y = -(center.y - curw) / 10;
       wind[curh][curw].str = 2;
       curw++
       currentR()
@@ -159,8 +141,8 @@ function currentL() {
     if (curw > -1) {
       // wind[curh][curw].x = 2;
       // wind[curh][curw].y = 6;
-      wind[curh][curw].x= -(center.x - curh)/10;
-      wind[curh][curw].y= -(center.y - curw)/10;
+      wind[curh][curw].x = -(center.x - curh) / 10;
+      wind[curh][curw].y = -(center.y - curw) / 10;
       wind[curh][curw].str = 2;
       curw--;
       currentL()
