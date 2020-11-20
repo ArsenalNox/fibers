@@ -9,8 +9,8 @@ var windRLinter
 // X, Y
 // const height = 140;
 // const width = 70;
-const height = 64;
-const width = 64;
+const height = 88;
+const width = 88;
 const limit = 20;
 var offsetX = 30;
 var offsetY = 30;

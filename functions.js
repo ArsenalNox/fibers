@@ -100,8 +100,26 @@ canvas.addEventListener('mousemove', function(evt) {
     mousePos.x = Math.round((mousePos.x + offsetX) / 10);
     mousePos.y = Math.round((mousePos.y + offsetY) / 10);
     if (((mousePos.x > 0) && (mousePos.x < height - 3)) && ((mousePos.y > 0) && (mousePos.y < width - 3))) {
-      center.x = mousePos.x;
-      center.y = mousePos.y;
+      //c
+      wind[mousePos.x][mousePos.y].str = 1;
+      wind[mousePos.x][mousePos.y].y = -(center.y - mousePos.y);
+      wind[mousePos.x][mousePos.y].x = -(center.x - mousePos.x);
+      //r
+      wind[mousePos.x + 1][mousePos.y].str = 1;
+      wind[mousePos.x + 1][mousePos.y].y = -(center.y - mousePos.y);
+      wind[mousePos.x + 1][mousePos.y].x = -(center.x - mousePos.x);
+      //l
+      wind[mousePos.x - 1][mousePos.y].str = 1;
+      wind[mousePos.x - 1][mousePos.y].y = -(center.y - mousePos.y);
+      wind[mousePos.x - 1][mousePos.y].x = -(center.x - mousePos.x);
+      //u
+      wind[mousePos.x][mousePos.y + 1].str = 1;
+      wind[mousePos.x][mousePos.y + 1].y = -(center.y - mousePos.y);
+      wind[mousePos.x][mousePos.y + 1].x = -(center.x - mousePos.x);
+      //d
+      wind[mousePos.x][mousePos.y - 1].str = 1;
+      wind[mousePos.x][mousePos.y - 1].y = -(center.y - mousePos.y);
+      wind[mousePos.x][mousePos.y - 1].x = -(center.x - mousePos.x);
     } else {}
     lastMouseX = mousePos.x;
     lastMouseY = mousePos.y;
@@ -217,8 +235,8 @@ function cricularWave() {
   if (waveCurrent < waveCount) {
     for (var i = iterWinds * 5; i < iterWinds * 5 + 5; i++) {
       for (var j = 0; j < 30; j++) {
-        wind[i][j].x = -(center.x - i);
-        wind[i][j].y = -(center.y - j);
+        // wind[i][j].x = -(center.x - i);
+        // wind[i][j].y = -(center.y - j);
         wind[i][j].str = 1;
       }
     }
@@ -244,8 +262,10 @@ function drawCircle() {
     for (var i = 0; i < height; i++) {
       for (var j = 0; j < width; j++) {
         if (Math.abs(Math.pow((i - center.x), 2) + Math.pow((j - center.y), 2) - Math.pow(r, 2)) < Math.pow(epsilon, 2)) {
-          wind[i][j].x = -(center.x - i) / 5;
-          wind[i][j].y = -(center.y - j) / 5;
+          // wind[i][j].x = -(center.x - i) / 5;
+          // wind[i][j].y = -(center.y - j) / 5;
+          wind[i][j].x = 5;
+          wind[i][j].y = -5;
           wind[i][j].str = 1;
         }
       }
