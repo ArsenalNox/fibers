@@ -74,11 +74,11 @@ for (let i = 0; i < height; i++) {
   }
 }
 
-function updateMenu(){
-document.getElementById('span-width').innerText = width;
-document.getElementById('span-height').innerText = height;
-document.getElementById('decay-input').value = decayRate;
-document.getElementById('mouse-control').innerText = mouseDraw
+function updateMenu() {
+  document.getElementById('span-width').innerText = width;
+  document.getElementById('span-height').innerText = height;
+  document.getElementById('decay-input').value = decayRate;
+  document.getElementById('mouse-control').innerText = mouseDraw
 }
 updateMenu()
 updateInter = setInterval(update, 10)
