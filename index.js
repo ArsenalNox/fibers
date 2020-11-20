@@ -9,8 +9,8 @@ var windRLinter
 // X, Y
 // const height = 140;
 // const width = 70;
-const height = 88;
-const width = 88;
+const height = 256;
+const width = 64;
 const limit = 20;
 var offsetX = 30;
 var offsetY = 30;
@@ -25,7 +25,7 @@ var center = {
 }
 
 //Итераторы для волны от центра
-var waveCount = 25;
+var waveCount = Math.round(height/6);
 var waveCurrent = 0;
 var iterWinds = 0;
 
@@ -43,7 +43,7 @@ var optionKeys = ['o', 'O', 'о', 'О', 'щ', 'Щ', 'j', 'J'];
 var animations = ['wavesRL', 'circularWaves', 'blocksToSide'];
 var mouseKeys = ['m', 'M'];
 var optionVisible = false;
-var currentAnimation = 1;
+var currentAnimation = 2;
 
 //Для круговых волн
 var epsilon = 4;

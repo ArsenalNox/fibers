@@ -29,6 +29,9 @@ function update() {
   ctx.stroke();
   for (let i = 0; i < fibers.length; i++) {
     for (let j = 0; j < fibers[0].length; j++) {
+      if ((fibers[i][j].x == 0) && (fibers[i][j].y == 0)) {
+        continue;
+      }
       let fx = i * 4 + offsetX;
       let fy = j * 4 + offsetY;
       let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
@@ -241,9 +244,9 @@ function initiateAnimation() {
 function cricularWave() {
   if (waveCurrent < waveCount) {
     for (var i = iterWinds * 5; i < iterWinds * 5 + 5; i++) {
-      for (var j = 0; j < 30; j++) {
-        // wind[i][j].x = -(center.x - i);
-        // wind[i][j].y = -(center.y - j);
+      for (var j = 0; j < width; j++) {
+        wind[i][j].x = -(center.x - i);
+        wind[i][j].y = -(center.y - j);
         wind[i][j].str = 1;
       }
     }
