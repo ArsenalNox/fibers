@@ -22,11 +22,11 @@ function update() {
   ctx.stroke();
   for (let i = 0; i < fibers.length; i++) {
     for (let j = 0; j < fibers[0].length; j++) {
-      let fx = i * 7 + 20;
-      let fy = j * 7 + 100;
+      let fx = i * 11 + 20;
+      let fy = j * 11 + 100;
       // let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
       ctx.beginPath();
-      ctx.strokeStyle = "rgb(" + Math.floor(fx / 2) + "," + Math.floor(fy / 2) + "," + color + ")";
+      ctx.strokeStyle = "rgb(" + Math.floor( fx% (i / j)) + "," + Math.floor( fy % (i*j) ) + "," + color + ")";
       ctx.moveTo(fx, fy);
       ctx.lineTo((fx) + fibers[i][j].x, (fy) + fibers[i][j].y);
       ctx.stroke();

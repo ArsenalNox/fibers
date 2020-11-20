@@ -67,6 +67,6 @@ document.getElementById('span-width').innerText = width;
 document.getElementById('span-height').innerText = height;
 
 
-updateInter = setInterval(update, 5)
+updateInter = setInterval(update, 10)
 initiateAnimation()
 window.addEventListener('keydown', keyHadle);
