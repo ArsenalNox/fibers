@@ -6,6 +6,7 @@
 // TODO: 2.Анимация кругового ветра
 
 function update() {
+  console.log(stopAnimation);
   //Высчитывание векторов фиберов
   for (var i = 0; i < fibers.length; i++) {
     for (var j = 0; j < fibers[0].length; j++) {
@@ -140,10 +141,10 @@ function currentR() {
   isAnimating = true
   if (curh < height) {
     if (curw < width) {
-      // wind[curh][curw].x = -2;
-      // wind[curh][curw].y = -6;
-      wind[curh][curw].x = -(center.x - curh) / 10;
-      wind[curh][curw].y = -(center.y - curw) / 10;
+      wind[curh][curw].x = incx;
+      wind[curh][curw].y = incy;
+      // wind[curh][curw].x = -(center.x - curh) / 10;
+      // wind[curh][curw].y = -(center.y - curw) / 10;
       wind[curh][curw].str = 2;
       curw++
       currentR()
@@ -155,10 +156,11 @@ function currentR() {
   } else {
     curw = width - 1;
     curh = height - 1;
-    if (!stopWind) {
+    if (!stopAnimation) {
       setTimeout(currentL, 500)
     } else {
-      isAnimating = false
+      stopAnimation = false
+      initiateAnimation()
     }
   }
 }
@@ -167,10 +169,10 @@ function currentL() {
   isAnimating = true
   if (curh > -1) {
     if (curw > -1) {
-      // wind[curh][curw].x = 2;
-      // wind[curh][curw].y = 6;
-      wind[curh][curw].x = -(center.x - curh) / 10;
-      wind[curh][curw].y = -(center.y - curw) / 10;
+      wind[curh][curw].x = -incx;
+      wind[curh][curw].y = -incy;
+      // wind[curh][curw].x = -(center.x - curh) / 10;
+      // wind[curh][curw].y = -(center.y - curw) / 10;
       wind[curh][curw].str = 2;
       curw--;
       currentL()
@@ -182,10 +184,11 @@ function currentL() {
   } else {
     curw = 1;
     curh = 1;
-    if (!stopWind) {
+    if (!stopAnimation) {
       setTimeout(currentR, 500)
     } else {
-      isAnimating = false
+      stopAnimation = false
+      initiateAnimation()
     }
   }
 }
@@ -221,22 +224,16 @@ function Options() {
 function initiateAnimation() {
   switch (animations[currentAnimation]) {
     case 'wavesRL':
-      if (!isAnimating) {
-        isAnimating = true
-        currentR()
-      }
+      isAnimating = true
+      currentR()
       break;
     case 'circularWaves':
-      if (!isAnimating) {
-        isAnimating = true
-        setInterval(drawCircle, 10)
-      }
+      isAnimating = true
+      curcleInter = setInterval(drawCircle, 10)
       break;
     case 'blocksToSide':
-      if (!isAnimating) {
-        isAnimating = true
-        setTimeout(cricularWave, 1000)
-      }
+      isAnimating = true
+      setTimeout(cricularWave, 1000)
       break;
   }
 }
@@ -256,8 +253,12 @@ function cricularWave() {
   } else {
     waveCurrent = 0;
     iterWinds = 0;
-
-    setTimeout(cricularWave, 100);
+    if (!stopAnimation) {
+      setTimeout(cricularWave, 100);
+    } else {
+      initiateAnimation()
+      stopAnimation = false
+    }
   }
 }
 
@@ -267,15 +268,14 @@ function changeDecay() {
 }
 
 function drawCircle() {
-  console.log('Drawing');
   if (iterationsCirlce < 40) {
     for (var i = 0; i < height; i++) {
       for (var j = 0; j < width; j++) {
         if (Math.abs(Math.pow((i - center.x), 2) + Math.pow((j - center.y), 2) - Math.pow(r, 2)) < Math.pow(epsilon, 2)) {
           // wind[i][j].x = -(center.x - i) / 5;
           // wind[i][j].y = -(center.y - j) / 5;
-          wind[i][j].x = 5;
-          wind[i][j].y = -5;
+          wind[i][j].x = incx;
+          wind[i][j].y = incy;
           wind[i][j].str = 1;
         }
       }
@@ -288,5 +288,24 @@ function drawCircle() {
     epsilon = 3;
     iterationsCirlce = 0;
   }
+  if (stopAnimation) {
+    clearInterval(curcleInter)
+    initiateAnimation()
+    stopAnimation = false
+  }
+}
 
+function changeAnimation(arg) {
+  console.log(arg);
+  switch (arg) {
+    case 'set':
+      currentAnimation = document.getElementById('as').value;
+      stopAnimation = true;
+      // initiateAnimation()
+      break;
+    case '-':
+      currentAnimation = document.getElementById('as').value;
+      initiateAnimation()
+      break;
+  }
 }

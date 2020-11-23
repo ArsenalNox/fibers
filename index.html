@@ -18,15 +18,16 @@
     <p>Информацая о поле: широта <span id='span-width'> </span>; высота <span id='span-height'> </span> </p>
     <p>Коэффицент убывания: <input type='range' max='1' min='0.9' step='0.001' id='decay-input' onchange="changeDecay()"></input> </p>
     <p>Рисование мышью <span id='mouse-control'></span> </p>
-    <label for="animation-select" style='color:white'>Текущая анимация:</label>
-    <select name="animation-select">
-      <option value="waves">Волны</option>
-      <option value="circularWaves">Круг(!)</option>
-      <option value="randomWind">Случайный ветер(!)</option>
+    <label for="animation-select" style='color:white'>Поменять анимацию на:</label>
+    <select name="animation-select" onchange="changeAnimation('set')" id='as'>
+      <option value="-">---</option>
+      <option value="0">Волны</option>
+      <option value="1">Круг(!)</option>
+      <option value="2">Случайный ветер(!)</option>
     </select>
   </section>
   <div class="full">
-    <canvas id="canvas" width='1024' height="512" style='border: 1px solid black'></canvas>
+    <canvas id="canvas" width='700' height="700" style='border: 1px solid black'></canvas>
   </div>
 </body>
 <script src="functions.js" charset="utf-8"></script>

@@ -9,11 +9,13 @@ var windRLinter
 // X, Y
 // const height = 140;
 // const width = 70;
-const height = 256;
+const height = 64;
 const width = 64;
 const limit = 20;
 var offsetX = 30;
-var offsetY = 30;
+var offsetY = 100;
+var incx = 2;
+var incy = 6;
 //Для волн
 var curw = 0;
 var curh = 0;
@@ -35,7 +37,7 @@ var mouseDraw = false;
 var lastMouseX = 25;
 var lastMouseY = 25;
 //Анимации
-var stopWind = false;
+var stopAnimation = false;
 var isAnimating = false;
 var decayRate = 0.95;
 //Горячие клавиши
@@ -43,8 +45,8 @@ var optionKeys = ['o', 'O', 'о', 'О', 'щ', 'Щ', 'j', 'J'];
 var animations = ['wavesRL', 'circularWaves', 'blocksToSide'];
 var mouseKeys = ['m', 'M'];
 var optionVisible = false;
-var currentAnimation = 2;
-
+var currentAnimation = Math.round(Math.random() * 2);
+var curcleInter;
 //Для круговых волн
 var epsilon = 4;
 var r = 2;
