@@ -6,7 +6,7 @@
 // TODO: 2.Анимация кругового ветра
 
 function update() {
-  console.log(stopAnimation);
+  //Обновляет поле
   //Высчитывание векторов фиберов
   for (var i = 0; i < fibers.length; i++) {
     for (var j = 0; j < fibers[0].length; j++) {
@@ -33,11 +33,11 @@ function update() {
       if ((fibers[i][j].x == 0) && (fibers[i][j].y == 0)) {
         continue;
       }
-      let fx = i * 4 + offsetX;
-      let fy = j * 4 + offsetY;
+      let fx = i * 6 + offsetX;
+      let fy = j * 6 + offsetY;
       let av = Math.sqrt(Math.pow(fibers[i][j].x, 2) + Math.pow(fibers[i][j].y, 2))
       ctx.beginPath();
-      ctx.strokeStyle = "rgb(" + Math.floor(255 - color) + "," + Math.floor(av * 4) + "," + color + ")";
+      ctx.strokeStyle = "rgb(" + Math.floor(255 - color) + ",255," + color + ")";
       ctx.moveTo(fx, fy);
       ctx.lineTo((fx) + fibers[i][j].x, (fy) + fibers[i][j].y);
       ctx.stroke();
@@ -64,6 +64,7 @@ function update() {
 }
 
 function ChangeVector(vector, change) {
+  //Изменяет вектор
   //Если нет ветра
   if ((change.x == 0) || (change.str == 0)) {
     //Если X находится в пределах округления
@@ -98,6 +99,7 @@ function ChangeVector(vector, change) {
 }
 
 function getMousePos(canvas, evt) {
+  //Получает позицию мыши
   var rect = canvas.getBoundingClientRect();
   return {
     x: evt.clientX - rect.left,
@@ -106,6 +108,7 @@ function getMousePos(canvas, evt) {
 }
 
 canvas.addEventListener('mousemove', function(evt) {
+  //Рисование мышью
   if (mouseDraw) {
     var mousePos = getMousePos(canvas, evt);
     mousePos.x = Math.round((mousePos.x + offsetX) / 10);
@@ -138,6 +141,7 @@ canvas.addEventListener('mousemove', function(evt) {
 }, false);
 
 function currentR() {
+  //Волна вправо
   isAnimating = true
   if (curh < height) {
     if (curw < width) {
@@ -166,6 +170,7 @@ function currentR() {
 }
 
 function currentL() {
+  //Волна влево
   isAnimating = true
   if (curh > -1) {
     if (curw > -1) {
@@ -194,6 +199,7 @@ function currentL() {
 }
 
 function keyHadle(e) {
+  //Обрабатывает нажатие клафиш
   if (optionKeys.includes(e.key)) {
     console.log('Option');
     Options()
@@ -208,6 +214,7 @@ function keyHadle(e) {
 }
 
 function Options() {
+  //Контролирует отображение меню
   switch (optionVisible) {
     case false:
       optionVisible = true
@@ -222,6 +229,7 @@ function Options() {
 }
 
 function initiateAnimation() {
+  //Инициирует анимации
   switch (animations[currentAnimation]) {
     case 'wavesRL':
       isAnimating = true
@@ -235,10 +243,15 @@ function initiateAnimation() {
       isAnimating = true
       setTimeout(cricularWave, 1000)
       break;
+    case 'randomWind':
+      isAnimating = true
+      setTimeout(randomWind)
+      break;
   }
 }
 
 function cricularWave() {
+  //Пускает блочную волну справа, вектора показывают в центр
   if (waveCurrent < waveCount) {
     for (var i = iterWinds * 5; i < iterWinds * 5 + 5; i++) {
       for (var j = 0; j < width; j++) {
@@ -263,11 +276,13 @@ function cricularWave() {
 }
 
 function changeDecay() {
+  //Меняет коэффицент затухания
   decayRate = decayInput.value
   console.log('Changing decay rate to ' + decayInput.value);
 }
 
 function drawCircle() {
+  //Пускает круговую волну из центра
   if (iterationsCirlce < 40) {
     for (var i = 0; i < height; i++) {
       for (var j = 0; j < width; j++) {
@@ -296,7 +311,7 @@ function drawCircle() {
 }
 
 function changeAnimation(arg) {
-  console.log(arg);
+  //Меняет анимации
   switch (arg) {
     case 'set':
       currentAnimation = document.getElementById('as').value;
@@ -308,4 +323,8 @@ function changeAnimation(arg) {
       initiateAnimation()
       break;
   }
+}
+
+function randomWind(){
+  
 }
